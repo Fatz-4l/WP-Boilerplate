@@ -14,6 +14,7 @@
            static: './dist',
            watchFiles: ['**/*.php', '**/*.css', '**/*.js'],
            allowedHosts: 'all',
+           host: 'localhost',
            devMiddleware: {
             writeToDisk: true // Add this to ensure files are written to disk
         }

@@ -8,8 +8,13 @@ function load_scripts() {
     
     wp_enqueue_script('customtheme-scripts', $entry_js, null, $entry_js_ver, false);
 }
-
 add_action('wp_enqueue_scripts', 'load_scripts');
+
+// Register Navigation Menus
+register_nav_menus(array(
+        'primary' => esc_html__('Primary Menu', 'customtheme'),
+        'footer'  => esc_html__('Footer Menu', 'customtheme'),
+));
 
 // Load template handling functionality
 require_once get_template_directory() . '/src/php/render-page-templates.php';
