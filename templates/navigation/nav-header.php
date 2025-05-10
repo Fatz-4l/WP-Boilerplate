@@ -6,7 +6,7 @@
 ?>
 
 <header class="border-b border-gray-200">
-    <div class="container">
+    <div class="container py-4">
         <div class="flex items-center justify-between py-5 max-w-full">
 
             <!-- Logo -->
@@ -34,7 +34,7 @@
                         bg-white lg:bg-transparent">
                 <?php 
                 wp_nav_menu([
-                    'theme_location' => 'primary',
+                    'theme_location' => 'header_menu',
                     'menu_class'     => 'flex flex-col lg:flex-row
                                          items-center justify-center lg:justify-start
                                          gap-8

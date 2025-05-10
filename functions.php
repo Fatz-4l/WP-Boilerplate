@@ -1,5 +1,6 @@
 <?php
 
+//Entry point for the theme
 function load_scripts() {
     $entry_js  = get_stylesheet_directory_uri() . '/dist/app.js';
     
@@ -10,14 +11,41 @@ function load_scripts() {
 }
 add_action('wp_enqueue_scripts', 'load_scripts');
 
-// Register Navigation Menus
-register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu', 'customtheme'),
-        'footer'  => esc_html__('Footer Menu', 'customtheme'),
-));
 
-// Load template handling functionality
+// Load all files in a directory
+function php_require_all_files_in_directory($dir) {
+    $files = glob($dir);
+    if ($files === false) {
+        return;
+    }
+    
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            require_once $file;
+        }
+    }
+}
+
+// Load all files from a directory
+php_require_all_files_in_directory(__DIR__ . '/src/php/shortcodes/*.php');
+
+//Load page templates
 require_once get_template_directory() . '/src/php/render-page-templates.php';
 
-// Add this line after the render-templates.php require
+//Load post templates
 require_once get_template_directory() . '/src/php/render-post-templates.php';
+
+// Register Navigation Menus
+register_nav_menus(array(
+    'header_menu' => esc_html__('Header Menu', 'customtheme'),
+    'footer_menu'  => esc_html__('Footer Menu', 'customtheme'),
+));
+
+// Add theme support for title tag
+add_theme_support('title-tag');
+
+// Shortcodes work in ACF fields
+add_filter('acf/format_value/type=textarea', 'do_shortcode');
+add_filter('acf/format_value/type=text', 'do_shortcode');
+add_filter('acf/format_value/type=wysiwyg', 'do_shortcode');
+
