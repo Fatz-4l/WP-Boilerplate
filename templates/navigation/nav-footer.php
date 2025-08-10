@@ -16,6 +16,7 @@
             <?php
             wp_nav_menu([
                 'theme_location' => 'footer_menu',
+                'container'      => false,
                 'menu_class'     => 'flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-black',
             ]);
             ?>

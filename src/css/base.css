@@ -1,0 +1,9 @@
+.blur-load {
+  filter: blur(10px);
+  transition: filter 0.4s ease-in-out;
+  will-change: filter;
+}
+
+.blur-load.loaded {
+  filter: blur(0);
+}

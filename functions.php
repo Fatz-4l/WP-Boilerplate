@@ -26,6 +26,8 @@ function php_require_all_files_in_directory($dir) {
     }
 }
 
+
+
 // Load all files from a directory
 php_require_all_files_in_directory(__DIR__ . '/src/php/shortcodes/*.php');
 
@@ -34,6 +36,9 @@ require_once get_template_directory() . '/src/php/render-page-templates.php';
 
 //Load post templates
 require_once get_template_directory() . '/src/php/render-post-templates.php';
+
+// Load functions extensions
+php_require_all_files_in_directory(__DIR__ . '/src/php/functions-extensions/*.php');
 
 // Register Navigation Menus
 register_nav_menus(array(
@@ -48,4 +53,3 @@ add_theme_support('title-tag');
 add_filter('acf/format_value/type=textarea', 'do_shortcode');
 add_filter('acf/format_value/type=text', 'do_shortcode');
 add_filter('acf/format_value/type=wysiwyg', 'do_shortcode');
-

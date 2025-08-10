@@ -35,6 +35,7 @@
                 <?php 
                 wp_nav_menu([
                     'theme_location' => 'header_menu',
+                    'container'      => false,
                     'menu_class'     => 'flex flex-col lg:flex-row
                                          items-center justify-center lg:justify-start
                                          gap-8
