@@ -11,6 +11,15 @@ function load_scripts() {
 }
 add_action('wp_enqueue_scripts', 'load_scripts');
 
+// Add custom image sizes
+add_image_size('xs', 300, 300, false);
+add_image_size('sm', 600, 600, false);
+add_image_size('md', 900, 900, false);
+add_image_size('lg', 1200, 1200, false);
+add_image_size('xl', 1600, 1600, false);
+add_image_size('xxl', 2000, 2000, false);
+
+
 
 // Load all files in a directory
 function php_require_all_files_in_directory($dir) {

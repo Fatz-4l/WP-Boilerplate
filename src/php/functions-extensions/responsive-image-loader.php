@@ -1,8 +1,7 @@
 <?php
 
-function get_responsive_image($image_id_or_url, $loading = 'lazy') {
-    $image_id = is_numeric($image_id_or_url) ? $image_id_or_url : attachment_url_to_postid($image_id_or_url);
-    if (!$image_id) return '';
+function get_responsive_image($image_id, $loading = 'lazy') {
+    if (!$image_id || !is_numeric($image_id)) return '';
     
     $srcset = wp_get_attachment_image_srcset($image_id, 'full');
     $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
@@ -33,6 +32,6 @@ function get_responsive_image($image_id_or_url, $loading = 'lazy') {
     );
 }
 
-function responsive_image($image_id_or_url, $loading = 'lazy') {
-    echo get_responsive_image($image_id_or_url, $loading);
+function responsive_image($image_id, $loading = 'lazy') {
+    echo get_responsive_image($image_id, $loading);
 }
