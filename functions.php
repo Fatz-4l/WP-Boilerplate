@@ -3,10 +3,10 @@
 //Entry point for the theme
 function load_scripts() {
     $entry_js  = get_stylesheet_directory_uri() . '/dist/app.js';
-    
+
     // create version codes.
     $entry_js_ver  = '007-' . filemtime(__DIR__ . '/dist/app.js');
-    
+
     wp_enqueue_script('customtheme-scripts', $entry_js, null, $entry_js_ver, false);
 }
 add_action('wp_enqueue_scripts', 'load_scripts');
@@ -27,7 +27,7 @@ function php_require_all_files_in_directory($dir) {
     if ($files === false) {
         return;
     }
-    
+
     foreach ($files as $file) {
         if (is_file($file)) {
             require_once $file;
@@ -35,19 +35,9 @@ function php_require_all_files_in_directory($dir) {
     }
 }
 
-
-
-// Load all files from a directory
-php_require_all_files_in_directory(__DIR__ . '/src/php/shortcodes/*.php');
-
-//Load page templates
-require_once get_template_directory() . '/src/php/render-page-templates.php';
-
-//Load post templates
-require_once get_template_directory() . '/src/php/render-post-templates.php';
-
-// Load functions extensions
-php_require_all_files_in_directory(__DIR__ . '/src/php/functions-extensions/*.php');
+// Load all PHP files from src/php directory (including shortcodes and functions-extensions)
+php_require_all_files_in_directory(__DIR__ . '/src/php/*/*.php');
+php_require_all_files_in_directory(__DIR__ . '/src/php/*/*/*.php');
 
 // Register Navigation Menus
 register_nav_menus(array(

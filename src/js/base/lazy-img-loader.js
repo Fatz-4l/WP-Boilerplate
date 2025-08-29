@@ -8,7 +8,7 @@ export default class LazyImageLoader {
             this.observer.unobserve(entry.target);
           }
         }),
-      { rootMargin: "100px" }
+      { rootMargin: "350px 0px" }
     );
 
     document
@@ -17,12 +17,22 @@ export default class LazyImageLoader {
   }
 
   loadImage(img) {
+    const dataSrcset = img.dataset.srcset;
     const dataSrc = img.dataset.src;
-    if (!dataSrc) return;
+    if (!dataSrc && !dataSrcset) return;
 
-    img.srcset = dataSrc;
-    img.src = dataSrc.split(",")[0].split(" ")[0];
-    delete img.dataset.src;
+    if (dataSrcset) {
+      img.srcset = dataSrcset;
+      delete img.dataset.srcset;
+    }
+
+    if (dataSrc) {
+      img.src = dataSrc;
+      delete img.dataset.src;
+    } else if (dataSrcset) {
+      const firstCandidate = dataSrcset.split(",")[0].split(" ")[0];
+      img.src = firstCandidate;
+    }
 
     img.addEventListener("load", () => {
       requestAnimationFrame(() => {

@@ -10,7 +10,7 @@ export default class LazyScriptLoader {
             this.observer.unobserve(entry.target);
           }
         }),
-      { rootMargin: "100px", threshold: 0 }
+      { rootMargin: "300px", threshold: 0 }
     );
 
     // Map of section classes to their corresponding modules
@@ -33,7 +33,7 @@ export default class LazyScriptLoader {
   initializeScript(section) {
     for (const [sectionClass, ModuleClass] of this.moduleMap) {
       if (section.matches(sectionClass)) {
-        new ModuleClass();
+        new ModuleClass(section);
         break;
       }
     }
