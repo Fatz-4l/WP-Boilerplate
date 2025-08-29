@@ -28,4 +28,8 @@
   .container {
     @apply py-12 max-w-[2000px];
   }
+
+  button {
+    @apply inline-flex items-center justify-center uppercase tracking-wide !px-4 !py-2;
+  }
 }
