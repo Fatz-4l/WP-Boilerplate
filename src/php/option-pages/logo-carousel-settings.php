@@ -8,12 +8,13 @@
 // Add logo carousel submenu page
 function bwt_add_logo_carousel_submenu() {
     add_submenu_page(
-        'theme-settings',                    // Parent slug
-        'Logo Carousel Settings',            // Page title
-        'Logo Carousel',                     // Menu title
-        'manage_options',                    // Capability
-        'logo-carousel-settings',            // Menu slug
-        'bwt_logo_carousel_settings_page'    // Callback function
+        'Theme Settings',           // Page title
+        'Theme Settings',           // Menu title
+        'manage_options',           // Capability
+        'theme-settings',           // Menu slug
+        'bwt_theme_settings_page',  // Callback function
+        'dashicons-cover-image', // Icon
+        75                     // Position
     );
 }
 
