@@ -14,21 +14,21 @@ import BaseTemplate from "./base-template.js";
 import MobileToggle from "./mobile-toggle.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize crucial components immediately
+  // Initialize Crucial Components
   new MobileToggle();
   new LazyImageLoader();
   new BreakPoints();
   new LazyScriptLoader();
 
-  // Initialize lazy loading for other components
+  // Initialize Lazy Loading Components
   const scriptLoader = new LazyScriptLoader();
 
-  // Register modules with their corresponding section classes
+  // Register Components
   scriptLoader.registerModule(".home-hero-section", BaseTemplate);
 
-  // Start observing sections
+  // Observe Sections
   scriptLoader.observe();
 });
 
-// Your JavaScript code here
-console.log("Theme initialized");
+
+console.log("Theme Initialized");
