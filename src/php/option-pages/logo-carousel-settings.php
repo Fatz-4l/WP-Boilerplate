@@ -6,31 +6,30 @@
  */
 
 // Add logo carousel submenu page
-function bwt_add_logo_carousel_submenu() {
+function add_logo_carousel_submenu() {
     add_submenu_page(
-        'Theme Settings',           // Page title
-        'Theme Settings',           // Menu title
-        'manage_options',           // Capability
-        'theme-settings',           // Menu slug
-        'bwt_theme_settings_page',  // Callback function
-        'dashicons-cover-image', // Icon
-        75                     // Position
+        'theme-settings',                    // Parent slug (matches main menu slug)
+        'Logo Carousel Settings',            // Page title
+        'Logo Carousel',                     // Menu title
+        'manage_options',                    // Capability
+        'logo-carousel-settings',            // Menu slug
+        'logo_carousel_settings_page'    // Callback function
     );
 }
 
 // Logo carousel settings page callback
-function bwt_logo_carousel_settings_page() {
+function logo_carousel_settings_page() {
     // Handle clear unused logos action
     if (isset($_POST['clear_unused_logos'])) {
-        check_admin_referer('bwt_logo_carousel_clear_unused');
+        check_admin_referer('logo_carousel_clear_unused');
 
-        $cleared_count = bwt_clear_unused_logo_options();
+        $cleared_count = clear_unused_logo_options();
         echo '<div class="notice notice-success"><p>Cleared ' . $cleared_count . ' unused logo entries from database!</p></div>';
     }
 
     // Handle form submission
     if (isset($_POST['submit'])) {
-        check_admin_referer('bwt_logo_carousel_settings');
+        check_admin_referer('logo_carousel_settings');
 
         // Clear existing logos first
         $existing_logos = get_option('logo_carousel_logos', []);
@@ -78,172 +77,172 @@ function bwt_logo_carousel_settings_page() {
 
     ?>
 <div class="wrap">
-    <h1>Logo Carousel Settings</h1>
-    <form method="post" action="">
-        <?php wp_nonce_field('bwt_logo_carousel_settings'); ?>
+   <h1>Logo Carousel Settings</h1>
+   <form method="post" action="">
+      <?php wp_nonce_field('logo_carousel_settings'); ?>
 
-        <div class="postbox">
-            <div class="postbox-header">
-                <h2 style="color:#E8B45C;">Section - Logo Carousel</h2>
-            </div>
-            <div class="inside">
-                <div id="logo-repeater" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <?php foreach ($logos as $index => $logo): ?>
-                    <div class="logo-item" data-index="<?php echo $index; ?>" style="border: 1px solid #ddd; padding: 12px; border-radius: 4px; background: #fafafa; break-inside: avoid;">
-                        <div class="logo-item-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
-                            <h4 style="margin: 0; font-size: 14px; font-weight: 600;">Logo <?php echo ($index + 1); ?></h4>
-                            <button type="button" class="button-link remove-logo" style="color: #dc3232; text-decoration: none; font-size: 12px;">✕ Remove</button>
+      <div class="postbox">
+         <div class="postbox-header">
+            <h2 style="color:#E8B45C;">Section - Logo Carousel</h2>
+         </div>
+         <div class="inside">
+            <div id="logo-repeater" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+               <?php foreach ($logos as $index => $logo): ?>
+               <div class="logo-item" data-index="<?php echo $index; ?>" style="border: 1px solid #ddd; padding: 12px; border-radius: 4px; background: #fafafa; break-inside: avoid;">
+                  <div class="logo-item-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                     <h4 style="margin: 0; font-size: 14px; font-weight: 600;">Logo <?php echo ($index + 1); ?></h4>
+                     <button type="button" class="button-link remove-logo" style="color: #dc3232; text-decoration: none; font-size: 12px;">✕ Remove</button>
+                  </div>
+                  <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: start;">
+                     <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Logo Image</label>
+                        <div style="border: 1px solid #ddd; padding: 6px; border-radius: 4px; background: #fff; min-height: 50px; display: flex; align-items: center; justify-content: center; position: relative;">
+                           <?php if (!empty($logo['image'])): ?>
+                           <img src="<?php echo esc_url($logo['image']); ?>"
+                                style="max-width: 100%; max-height: 40px; object-fit: contain;"
+                                class="logo-preview-img" />
+                           <button type="button" class="button button-small change-image-button"
+                                   data-target="<?php echo $index; ?>"
+                                   style="position: absolute; top: 2px; right: 2px; min-height: 20px; padding: 1px 6px; font-size: 10px;">
+                              Change
+                           </button>
+                           <?php else: ?>
+                           <div class="upload-placeholder" style="text-align: center; color: #666;">
+                              <span style="font-size: 11px;">No image selected</span><br>
+                              <button type="button" class="button button-small upload-button" data-target="<?php echo $index; ?>">Upload Image</button>
+                           </div>
+                           <?php endif; ?>
                         </div>
-                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: start;">
-                            <div>
-                                <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Logo Image</label>
-                                <div style="border: 1px solid #ddd; padding: 6px; border-radius: 4px; background: #fff; min-height: 50px; display: flex; align-items: center; justify-content: center; position: relative;">
-                                    <?php if (!empty($logo['image'])): ?>
-                                    <img src="<?php echo esc_url($logo['image']); ?>"
-                                         style="max-width: 100%; max-height: 40px; object-fit: contain;"
-                                         class="logo-preview-img" />
-                                    <button type="button" class="button button-small change-image-button"
-                                            data-target="<?php echo $index; ?>"
-                                            style="position: absolute; top: 2px; right: 2px; min-height: 20px; padding: 1px 6px; font-size: 10px;">
-                                        Change
-                                    </button>
-                                    <?php else: ?>
-                                    <div class="upload-placeholder" style="text-align: center; color: #666;">
-                                        <span style="font-size: 11px;">No image selected</span><br>
-                                        <button type="button" class="button button-small upload-button" data-target="<?php echo $index; ?>">Upload Image</button>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                                <input type="hidden"
-                                       name="logos[<?php echo $index; ?>][image]"
-                                       value="<?php echo esc_url($logo['image']); ?>"
-                                       class="logo-image-input" />
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-                                <div>
-                                    <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Mobile (rem)</label>
-                                    <input type="number"
-                                           name="logos[<?php echo $index; ?>][height_mobile]"
-                                           value="<?php echo esc_attr($logo['height_mobile']); ?>"
-                                           step="0.1"
-                                           min="0.5"
-                                           max="10"
-                                           class="small-text"
-                                           style="width: 100%;" />
-                                </div>
-                                <div>
-                                    <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Desktop (rem)</label>
-                                    <input type="number"
-                                           name="logos[<?php echo $index; ?>][height_desktop]"
-                                           value="<?php echo esc_attr($logo['height_desktop']); ?>"
-                                           step="0.1"
-                                           min="0.5"
-                                           max="10"
-                                           class="small-text"
-                                           style="width: 100%;" />
-                                </div>
-                                <div>
-                                    <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Width</label>
-                                    <input type="text"
-                                           name="logos[<?php echo $index; ?>][width]"
-                                           value="<?php echo esc_attr($logo['width']); ?>"
-                                           class="small-text"
-                                           placeholder="auto"
-                                           style="width: 100%;" />
-                                </div>
-                            </div>
+                        <input type="hidden"
+                               name="logos[<?php echo $index; ?>][image]"
+                               value="<?php echo esc_url($logo['image']); ?>"
+                               class="logo-image-input" />
+                     </div>
+                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                        <div>
+                           <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Mobile (rem)</label>
+                           <input type="number"
+                                  name="logos[<?php echo $index; ?>][height_mobile]"
+                                  value="<?php echo esc_attr($logo['height_mobile']); ?>"
+                                  step="0.1"
+                                  min="0.5"
+                                  max="10"
+                                  class="small-text"
+                                  style="width: 100%;" />
                         </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <div style="margin-bottom: 15px; margin-top: 15px;">
-                    <button type="button" id="bulk-upload-logos" class="button button-primary">
-                        <span class="dashicons dashicons-images-alt2" style="vertical-align: middle;"></span>
-                        Select Multiple Logos
-                    </button>
-                    <button type="button" id="add-logo" class="button button-secondary" style="margin-left: 10px;">
-                        <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
-                        Add Single Logo
-                    </button>
-                </div>
+                        <div>
+                           <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Desktop (rem)</label>
+                           <input type="number"
+                                  name="logos[<?php echo $index; ?>][height_desktop]"
+                                  value="<?php echo esc_attr($logo['height_desktop']); ?>"
+                                  step="0.1"
+                                  min="0.5"
+                                  max="10"
+                                  class="small-text"
+                                  style="width: 100%;" />
+                        </div>
+                        <div>
+                           <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px;">Width</label>
+                           <input type="text"
+                                  name="logos[<?php echo $index; ?>][width]"
+                                  value="<?php echo esc_attr($logo['width']); ?>"
+                                  class="small-text"
+                                  placeholder="auto"
+                                  style="width: 100%;" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <?php endforeach; ?>
             </div>
-        </div>
 
-        <?php submit_button(); ?>
-    </form>
+            <div style="margin-bottom: 15px; margin-top: 15px;">
+               <button type="button" id="bulk-upload-logos" class="button button-primary">
+                  <span class="dashicons dashicons-images-alt2" style="vertical-align: middle;"></span>
+                  Select Multiple Logos
+               </button>
+               <button type="button" id="add-logo" class="button button-secondary" style="margin-left: 10px;">
+                  <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                  Add Single Logo
+               </button>
+            </div>
+         </div>
+      </div>
 
-    <!-- Clear Unused Logos Section -->
-    <div class="postbox" style="margin-top: 20px;">
-        <div class="postbox-header">
-            <h2>Database Cleanup</h2>
-        </div>
-        <div class="inside">
-            <p>Remove orphaned logo data from the database that may remain after deleting logos.</p>
-            <form method="post" action="" style="display: inline-block;">
-                <?php wp_nonce_field('bwt_logo_carousel_clear_unused'); ?>
-                <button type="submit" name="clear_unused_logos" class="button button-secondary"
-                        onclick="return confirm('Are you sure you want to clear unused logo data from the database? This cannot be undone.');">
-                    <span class="dashicons dashicons-trash" style="vertical-align: middle;"></span>
-                    Clear Unused Logo Data
-                </button>
-            </form>
-            <p class="description">
-                This will scan the database for any logo_carousel_* options that are not currently in use and remove them.
-                <strong>This action cannot be undone.</strong>
-            </p>
-        </div>
-    </div>
+      <?php submit_button(); ?>
+   </form>
+
+   <!-- Clear Unused Logos Section -->
+   <div class="postbox" style="margin-top: 20px;">
+      <div class="postbox-header">
+         <h2>Database Cleanup</h2>
+      </div>
+      <div class="inside">
+         <p>Remove orphaned logo data from the database that may remain after deleting logos.</p>
+         <form method="post" action="" style="display: inline-block;">
+            <?php wp_nonce_field('logo_carousel_clear_unused'); ?>
+            <button type="submit" name="clear_unused_logos" class="button button-secondary"
+                    onclick="return confirm('Are you sure you want to clear unused logo data from the database? This cannot be undone.');">
+               <span class="dashicons dashicons-trash" style="vertical-align: middle;"></span>
+               Clear Unused Logo Data
+            </button>
+         </form>
+         <p class="description">
+            This will scan the database for any logo_carousel_* options that are not currently in use and remove them.
+            <strong>This action cannot be undone.</strong>
+         </p>
+      </div>
+   </div>
 </div>
 
 <script>
 jQuery(document).ready(function($) {
-    var logoIndex = <?php echo count($logos); ?>;
-    // Bulk media uploader functionality
-    $('#bulk-upload-logos').click(function(e) {
-        e.preventDefault();
-        var bulkMediaUploader = wp.media({
-            title: 'Select Multiple Logo Images',
-            button: {
-                text: 'Add Selected Logos'
-            },
-            multiple: true
-        });
-        bulkMediaUploader.on('select', function() {
-            var attachments = bulkMediaUploader.state().get('selection').toJSON();
-            // Loop through selected images and create logo fields
-            attachments.forEach(function(attachment) {
-                addLogoWithImage(attachment.url);
-            });
-            updateLogoNumbers();
-        });
-        bulkMediaUploader.open();
-    });
-    // Single media uploader functionality for both upload and change buttons
-    $(document).on('click', '.upload-button, .change-image-button', function(e) {
-        e.preventDefault();
-        var targetIndex = $(this).data('target');
-        var logoItem = $(this).closest('.logo-item');
-        var targetInput = logoItem.find('.logo-image-input');
-        var imageContainer = logoItem.find('.logo-preview-img').parent();
-        var mediaUploader = wp.media({
-            title: 'Select Logo Image',
-            button: {
-                text: 'Use This Image'
-            },
-            multiple: false
-        });
-        mediaUploader.on('select', function() {
-            var attachment = mediaUploader.state().get('selection').first().toJSON();
-            targetInput.val(attachment.url);
-            // Update the image preview
-            updateImagePreview(logoItem, attachment.url, targetIndex);
-        });
-        mediaUploader.open();
-    });
-    // Add single logo functionality
-    $('#add-logo').click(function() {
-        var newLogoHtml = `
+   var logoIndex = <?php echo count($logos); ?>;
+   // Bulk media uploader functionality
+   $('#bulk-upload-logos').click(function(e) {
+      e.preventDefault();
+      var bulkMediaUploader = wp.media({
+         title: 'Select Multiple Logo Images',
+         button: {
+            text: 'Add Selected Logos'
+         },
+         multiple: true
+      });
+      bulkMediaUploader.on('select', function() {
+         var attachments = bulkMediaUploader.state().get('selection').toJSON();
+         // Loop through selected images and create logo fields
+         attachments.forEach(function(attachment) {
+            addLogoWithImage(attachment.url);
+         });
+         updateLogoNumbers();
+      });
+      bulkMediaUploader.open();
+   });
+   // Single media uploader functionality for both upload and change buttons
+   $(document).on('click', '.upload-button, .change-image-button', function(e) {
+      e.preventDefault();
+      var targetIndex = $(this).data('target');
+      var logoItem = $(this).closest('.logo-item');
+      var targetInput = logoItem.find('.logo-image-input');
+      var imageContainer = logoItem.find('.logo-preview-img').parent();
+      var mediaUploader = wp.media({
+         title: 'Select Logo Image',
+         button: {
+            text: 'Use This Image'
+         },
+         multiple: false
+      });
+      mediaUploader.on('select', function() {
+         var attachment = mediaUploader.state().get('selection').first().toJSON();
+         targetInput.val(attachment.url);
+         // Update the image preview
+         updateImagePreview(logoItem, attachment.url, targetIndex);
+      });
+      mediaUploader.open();
+   });
+   // Add single logo functionality
+   $('#add-logo').click(function() {
+      var newLogoHtml = `
                 <div class="logo-item" data-index="${logoIndex}">
                     <div class="logo-item-header">
                         <h3>Logo ${logoIndex + 1}</h3>
@@ -309,22 +308,22 @@ jQuery(document).ready(function($) {
                     <hr style="margin: 20px 0;" />
                 </div>
             `;
-        $('#logo-repeater').append(newLogoHtml);
-        logoIndex++;
-        updateLogoNumbers();
-    });
-    // Remove logo functionality
-    $(document).on('click', '.remove-logo', function() {
-        if ($('.logo-item').length > 1) {
-            $(this).closest('.logo-item').remove();
-            updateLogoNumbers();
-        } else {
-            alert('At least one logo must remain.');
-        }
-    });
-    // Add logo with pre-filled image URL
-    function addLogoWithImage(imageUrl) {
-        var newLogoHtml = `
+      $('#logo-repeater').append(newLogoHtml);
+      logoIndex++;
+      updateLogoNumbers();
+   });
+   // Remove logo functionality
+   $(document).on('click', '.remove-logo', function() {
+      if ($('.logo-item').length > 1) {
+         $(this).closest('.logo-item').remove();
+         updateLogoNumbers();
+      } else {
+         alert('At least one logo must remain.');
+      }
+   });
+   // Add logo with pre-filled image URL
+   function addLogoWithImage(imageUrl) {
+      var newLogoHtml = `
                 <div class="logo-item" data-index="${logoIndex}" style="border: 1px solid #ddd; padding: 12px; border-radius: 4px; background: #fafafa; break-inside: avoid;">
                     <div class="logo-item-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
                         <h4 style="margin: 0; font-size: 14px; font-weight: 600;">Logo ${logoIndex + 1}</h4>
@@ -391,13 +390,13 @@ jQuery(document).ready(function($) {
                     </div>
                 </div>
             `;
-        $('#logo-repeater').append(newLogoHtml);
-        logoIndex++;
-    }
-    // Update image preview when new image is selected
-    function updateImagePreview(logoItem, imageUrl, targetIndex) {
-        var imageContainer = logoItem.find('div[style*="min-height: 50px"]');
-        var newImageHtml = `
+      $('#logo-repeater').append(newLogoHtml);
+      logoIndex++;
+   }
+   // Update image preview when new image is selected
+   function updateImagePreview(logoItem, imageUrl, targetIndex) {
+      var imageContainer = logoItem.find('div[style*="min-height: 50px"]');
+      var newImageHtml = `
             <img src="${imageUrl}"
                  style="max-width: 100%; max-height: 40px; object-fit: contain;"
                  class="logo-preview-img" />
@@ -407,41 +406,41 @@ jQuery(document).ready(function($) {
                 Change
             </button>
         `;
-        imageContainer.html(newImageHtml);
-    }
-    // Update logo numbers and reindex form fields
-    function updateLogoNumbers() {
-        $('.logo-item').each(function(index) {
-            // Update visual logo number
-            $(this).find('h4').text('Logo ' + (index + 1));
-            $(this).attr('data-index', index);
-            // Update all form field names to use the new index
-            $(this).find('input[name*="[image]"]').attr('name', 'logos[' + index + '][image]');
-            $(this).find('input[name*="[height_mobile]"]').attr('name', 'logos[' + index + '][height_mobile]');
-            $(this).find('input[name*="[height_desktop]"]').attr('name', 'logos[' + index + '][height_desktop]');
-            $(this).find('input[name*="[width]"]').attr('name', 'logos[' + index + '][width]');
-            // Update upload button data-target
-            $(this).find('.upload-button').attr('data-target', index);
-        });
-        // Reset logoIndex to the current count of logos
-        logoIndex = $('.logo-item').length;
-    }
+      imageContainer.html(newImageHtml);
+   }
+   // Update logo numbers and reindex form fields
+   function updateLogoNumbers() {
+      $('.logo-item').each(function(index) {
+         // Update visual logo number
+         $(this).find('h4').text('Logo ' + (index + 1));
+         $(this).attr('data-index', index);
+         // Update all form field names to use the new index
+         $(this).find('input[name*="[image]"]').attr('name', 'logos[' + index + '][image]');
+         $(this).find('input[name*="[height_mobile]"]').attr('name', 'logos[' + index + '][height_mobile]');
+         $(this).find('input[name*="[height_desktop]"]').attr('name', 'logos[' + index + '][height_desktop]');
+         $(this).find('input[name*="[width]"]').attr('name', 'logos[' + index + '][width]');
+         // Update upload button data-target
+         $(this).find('.upload-button').attr('data-target', index);
+      });
+      // Reset logoIndex to the current count of logos
+      logoIndex = $('.logo-item').length;
+   }
 });
 </script>
 <?php
 }
 
 // Enqueue media uploader for logo carousel settings page
-function bwt_logo_carousel_enqueue_admin_scripts($hook) {
+function logo_carousel_enqueue_admin_scripts($hook) {
     if ($hook === 'theme-settings_page_logo-carousel-settings') {
         wp_enqueue_media();
         wp_enqueue_script('jquery');
     }
 }
-add_action('admin_enqueue_scripts', 'bwt_logo_carousel_enqueue_admin_scripts');
+add_action('admin_enqueue_scripts', 'logo_carousel_enqueue_admin_scripts');
 
 // Function to clear unused logo options from database
-function bwt_clear_unused_logo_options() {
+function clear_unused_logo_options() {
     global $wpdb;
 
     // Get current logos array to see which indices are in use

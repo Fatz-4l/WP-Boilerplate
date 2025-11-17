@@ -30,6 +30,6 @@
   }
 
   button {
-    @apply inline-flex items-center justify-center uppercase tracking-wide !px-4 !py-2;
+    @apply inline-flex items-center justify-center uppercase tracking-wide !px-4 !py-2 bg-black text-white;
   }
 }

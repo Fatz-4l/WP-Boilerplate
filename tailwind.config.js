@@ -23,8 +23,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        head: ['montserrat', 'system-ui', 'sans-serif'],
-        base: ['montserrat', 'system-ui', 'sans-serif'],
+        head: ['Montserrat Bold', 'system-ui', 'sans-serif'],
+        base: ['Montserrat', 'system-ui', 'sans-serif'],
       },
       colors: {
       },
@@ -32,4 +32,3 @@ module.exports = {
   },
   plugins: [],
 }
-
