@@ -9,7 +9,12 @@
   }
 
   body {
-    @apply font-base;
+    @apply bg-white;
+    @apply text-black;
+  }
+
+  main {
+    @apply bg-white;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -29,7 +34,8 @@
     @apply py-12 max-w-[2000px];
   }
 
-  button {
-    @apply inline-flex items-center justify-center uppercase tracking-wide !px-4 !py-2 bg-black text-white;
+  .btn {
+    @apply bg-black text-white px-4 py-2 inline-flex;
   }
+
 }

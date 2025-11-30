@@ -77,33 +77,33 @@ if (!empty($logos_data)) {
 
 /* Logo Carousel - Minimal CSS */
 .logo-carousel-track {
-    animation: infiniteScroll 100s linear infinite;
-    will-change: transform;
+   animation: infiniteScroll 100s linear infinite;
+   will-change: transform;
 }
 
 @keyframes infiniteScroll {
-    to {
-        transform: translateX(-50%);
-    }
+   to {
+      transform: translateX(-50%);
+   }
 }
 </style>
 
 <div class="logo-carousel-track opacity-50 flex items-center overflow-hidden">
-    <?php for ($set = 0; $set < 2; $set++): // Two sets for seamless loop ?>
-    <?php for ($i = 0; $i < 14; $i++): ?>
-    <?php
+   <?php for ($set = 0; $set < 2; $set++): // Two sets for seamless loop ?>
+   <?php for ($i = 0; $i < 14; $i++): ?>
+   <?php
         $logo = $logo_config[$i % count($logo_config)];
         $image_url = $logo['url'];
         $alt_text = $logo['alt'];
         $css_class = $logo['css_class'];
         ?>
-    <div class="flex-shrink-0 mr-[150px] lg:mr-[150px] md:mr-[100px] sm:mr-[100px]">
-        <img src="<?= esc_url($image_url); ?>"
-             alt="<?= esc_attr($alt_text); ?>"
-             class="<?= $css_class; ?>"
-             loading="eager">
-    </div>
-    <?php endfor; ?>
-    <?php endfor; ?>
+   <div class="flex-shrink-0 mr-[150px] lg:mr-[150px] md:mr-[100px] sm:mr-[100px]">
+      <img src="<?= esc_url($image_url); ?>"
+           alt="<?= esc_attr($alt_text); ?>"
+           class="<?= $css_class; ?>"
+           loading="eager">
+   </div>
+   <?php endfor; ?>
+   <?php endfor; ?>
 </div>
 <?php endif; ?>

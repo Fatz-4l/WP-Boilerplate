@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Logo Carousel Settings
  * Modular settings page for logo carousel configuration

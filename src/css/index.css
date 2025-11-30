@@ -1,1 +1,3 @@
-@import "./base.css";
+@import "../css/base/base.css";
+@import "../css/base/menu-desktop.css";
+@import "../css/base/menu-mobile.css";

@@ -1,0 +1,28 @@
+/* Desktop Menu Toggle Classes */
+
+@media (min-width: 768px) {
+
+    .menu-item-parent:hover > .dropdown-menu,
+    .menu-item-parent.dropdown-active > .dropdown-menu,
+    .menu-item-sub-parent:hover > .dropdown-menu,
+    .menu-item-sub-parent.dropdown-active > .dropdown-menu {
+        opacity: 1 ;
+        visibility: visible ;
+    }
+
+    .menu-item-sub-parent:hover > .dropdown-menu,
+    .menu-item-sub-parent.dropdown-active > .dropdown-menu {
+        transform: translateX(0) ;
+    }
+
+
+    .menu-item-parent:hover .dropdown-arrow,
+    .menu-item-parent.dropdown-active .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
+    .menu-item-sub-parent:hover .dropdown-arrow-right,
+    .menu-item-sub-parent.dropdown-active .dropdown-arrow-right {
+        transform: rotate(180deg);
+    }
+}

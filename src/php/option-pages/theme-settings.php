@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Theme Settings Options Page
  * Main options page for global theme settings
@@ -39,14 +38,14 @@ function load_option_subpages() {
 function theme_settings_page() {
     ?>
 <div class="wrap">
-    <h1>Theme Settings</h1>
-    <p>Manage global theme settings from the sub-pages in the menu.</p>
-    <div class="card">
-        <h2>Available Settings</h2>
-        <ul>
-            <li><a href="<?php echo admin_url('admin.php?page=logo-carousel-settings'); ?>">Logo Carousel Settings</a> - Configure logo carousel images and sizing</li>
-        </ul>
-    </div>
+   <h1>Theme Settings</h1>
+   <p>Manage global theme settings from the sub-pages in the menu.</p>
+   <div class="card">
+      <h2>Available Settings</h2>
+      <ul>
+         <li><a href="<?php echo admin_url('admin.php?page=logo-carousel-settings'); ?>">Logo Carousel Settings</a> - Configure logo carousel images and sizing</li>
+      </ul>
+   </div>
 </div>
 <?php
 }
