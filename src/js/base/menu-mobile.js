@@ -1,4 +1,4 @@
-import ScrollLock from './utils/scroll-lock.js';
+import ScrollLock from '../utils/scroll-lock.js';
 
 export default class MenuMobile {
   constructor() {
