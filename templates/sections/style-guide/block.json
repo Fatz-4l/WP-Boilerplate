@@ -1,0 +1,10 @@
+{
+  "name": "acf/style-guide",
+  "title": "Style Guide",
+  "category": "custom-blocks",
+  "icon": "grid-view",
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "style-guide.php"
+  }
+}

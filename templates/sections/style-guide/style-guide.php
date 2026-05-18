@@ -1,3 +1,9 @@
+<?php
+/**
+ * Home Hero Section
+ */
+?>
+
 <div class="mb-10 space-y-10">
    <div>
       <h1>Heading 1</h1>

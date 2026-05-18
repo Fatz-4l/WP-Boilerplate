@@ -45,6 +45,7 @@ php_require_all_files_in_directory(__DIR__ . '/src/php/*.php');
 php_require_all_files_in_directory(__DIR__ . '/src/php/*/*.php');
 php_require_all_files_in_directory(__DIR__ . '/src/php/*/*/*.php');
 php_require_all_files_in_directory(__DIR__ . '/src/php/*/*/*/*.php');
+php_require_all_files_in_directory(__DIR__ . '/templates/sections/**/register.php');
 
 
 // Register Navigation Menus
