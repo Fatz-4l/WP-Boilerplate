@@ -10,10 +10,10 @@ function load_build_files() {
     $entry_css_ver = '007-' . filemtime(__DIR__ . '/dist/app.css');
 
     // CSS Build File
-    wp_enqueue_style('wp-boilerplate-styles', $entry_css, [], $entry_css_ver);
+    wp_enqueue_style('theme-styles', $entry_css, [], $entry_css_ver);
 
     // JS Build File
-    wp_enqueue_script('wp-boilerplate-scripts', $entry_js, [], $entry_js_ver);
+    wp_enqueue_script('theme-scripts', $entry_js, [], $entry_js_ver);
 }
 add_action('wp_enqueue_scripts', 'load_build_files');
 
@@ -50,8 +50,8 @@ php_require_all_files_in_directory(__DIR__ . '/templates/sections/**/register.ph
 
 // Register Navigation Menus
 register_nav_menus(array(
-    'header_menu' => esc_html__('Header Menu', 'wp-boilerplate'),
-    'footer_menu'  => esc_html__('Footer Menu', 'wp-boilerplate'),
+    'header_menu' => esc_html__('Header Menu'),
+    'footer_menu'  => esc_html__('Footer Menu'),
 ));
 
 
